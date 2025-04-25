@@ -5,9 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "npx tsx --env-file=.env src/server.ts",
-    "dev": "npx tsx --env-file=.env --watch src/server.ts",
-    "debug": "npx tsx --inspect --watch src/server.ts",
+    "start": "npx tsx --env-file=.env src/index.ts",
+    "dev": "npx tsx --env-file=.env --watch src/index.ts",
+    "debug": "npx tsx --inspect --watch src/index.ts",
     "test": "npx mocha test/**/*.test.ts --import=tsx"
   },
   "repository": {
