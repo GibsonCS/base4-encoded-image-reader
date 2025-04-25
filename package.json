@@ -1,0 +1,31 @@
+{
+  "name": "gibson-shopper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "npx tsx --env-file=.env src/server.ts",
+    "dev": "npx tsx --env-file=.env --watch src/server.ts",
+    "debug": "npx tsx --inspect --watch src/server.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GibsonCS/gibson-shopper.git"
+  },
+  "engines": {
+    "node": "22"
+  },
+  "keywords": [],
+  "author": "Gibson Cruz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GibsonCS/gibson-shopper/issues"
+  },
+  "homepage": "https://github.com/GibsonCS/gibson-shopper#readme",
+  "devDependencies": {
+    "@types/node": "^22.15.2",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3"
+  }
+}
