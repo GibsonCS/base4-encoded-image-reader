@@ -1,5 +1,11 @@
 export class MeasurementService {
-  // constructor()
 
-  getMeasurement = async () => {};
+  getMeasurement = async (measureData) => {
+
+    return {
+      image_url: "url_image",
+      measure_value: 200,
+      measure_uuid: "uuid123456"
+    }
+  };
 }
