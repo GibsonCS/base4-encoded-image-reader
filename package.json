@@ -8,7 +8,8 @@
     "start": "npx tsx --env-file=.env src/index.ts",
     "dev": "npx tsx --env-file=.env --watch src/index.ts",
     "debug": "npx tsx --inspect --watch src/index.ts",
-    "test": "npx mocha tests/**/*.test.ts --import=tsx"
+    "test": "npx tsx --test",
+    "test:dev": "npx tsx --watch --test"
   },
   "repository": {
     "type": "git",
@@ -30,7 +31,6 @@
     "@types/node": "^22.15.2",
     "@types/sinon": "^17.0.4",
     "chai": "^5.2.0",
-    "mocha": "^11.1.0",
     "tsx": "^4.19.3",
     "typescript": "^5.8.3"
   },
