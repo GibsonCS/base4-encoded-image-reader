@@ -1,12 +1,12 @@
-import { before, describe, it, afterEach, after } from "mocha";
+import { before, describe, it} from "node:test";
 import { expect } from "chai";
 import getMeasurementMocks from './mocks/getMeasurement-mocks.json' with {type: "json"}
-import { MeasurementService } from "../../src/modules/measurement/services/measurementService.ts";
+import { MeasurementService } from "../../src/modules/measurement/services/measurementService.js";
 
 describe("MeasurementService", () => {
   let measurementService: MeasurementService
 
-  beforeEach(() => {
+  before(() => {
     measurementService = new MeasurementService()
   })
 
