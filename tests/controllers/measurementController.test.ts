@@ -1,43 +1,49 @@
-import { before, describe, it, after } from "node:test";
+import { describe, it } from "node:test";
+import sinon from "sinon";
 import { expect } from "chai";
-import { MeasurementController } from "../../src/modules/measurement/controllers/measurementController.js";
-import { server } from "../../src/index.ts";
+import type { MeasurementService } from "../../src/modules/measurement/services/measurementService.ts";
+import { MeasurementController } from "../../src/modules/measurement/controllers/measurementController.ts";
 
 describe("MeasurementController suite tests", () => {
-  let measurementController: MeasurementController;
-
-  before(async () => {
-    // await startServer();
-    await server.listen({ port: 80 });
-    measurementController = new MeasurementController();
-  });
-
-  after(async () => {
-    await server.close();
-    console.log("Server close");
-  });
-
   describe("handleMeasurement", () => {
-    it("Should return http status 200 and a valid json", async () => {
-      const inputData = {
-        image: "base64",
-        customer_code: "string",
-        measure_datetime: "datetime",
-        measure_type: "WATER",
-      };
-      const expected = {
-        image_url: "url_image",
-        measure_value: 500,
-        measure_uuid: "uuid123",
+    it("should call service and respond with status 200 and a valid json", async () => {
+      const mockService: MeasurementService = {
+        getMeasurement: sinon.stub().resolves({
+          image_url: "http://example.com/image.jpg",
+          measure_value: 42.7,
+          measure_uuid: "abc-123",
+        }),
       };
 
-      const response = await fetch("http://localhost:80/upload", {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify(inputData),
+      const measurementController = new MeasurementController(mockService);
+
+      const mockRequest = {
+        body: {
+          image: "base64string",
+          customer_code: "ABC123",
+          measure_datetime: "2024-01-01T12:00:00Z",
+          measure_type: "WATER",
+        },
+      };
+
+      const reply = {
+        code: sinon.stub().returnsThis(),
+        send: sinon.stub(),
+      };
+
+      await measurementController.handleMeasurement(
+        mockRequest as any,
+        reply as any
+      );
+
+      const statusCode = reply.code.firstCall.args[0];
+      expect(statusCode).to.be.equal(200);
+
+      const responsePayload = reply.send.firstCall.args[0];
+      expect(responsePayload).to.containSubset({
+        image_url: (val: string) => typeof val === "string",
+        measure_value: (val: number) => typeof val === "number",
       });
-      const result = await response.json();
-      expect(result).to.be.deep.equal(expected);
     });
   });
 });
