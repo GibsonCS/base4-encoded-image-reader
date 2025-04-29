@@ -1,8 +1,8 @@
 import { describe, it } from "node:test";
 import sinon from "sinon";
 import { expect } from "chai";
-import type { MeasurementService } from "../../src/modules/measurement/services/measurementService.ts";
-import { MeasurementController } from "../../src/modules/measurement/controllers/measurementController.ts";
+import type { MeasurementService } from "../../src/services/measurementService.ts";
+import { MeasurementController } from "../../src/controllers/measurementController.ts";
 
 describe("MeasurementController suite tests", () => {
   describe("handleMeasurement", () => {
