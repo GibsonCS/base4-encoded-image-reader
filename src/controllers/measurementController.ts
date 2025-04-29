@@ -16,8 +16,15 @@ export class MeasurementController {
       return;
     }
 
-    this.service.getMeasurement(result.data);
+    const response: any = await this.service.getMeasurement(result.data);
 
+    if (response.error_code === "DOUBLE_REPORT") {
+      reply.code(409).send({
+        error_code: "DOUBLE_REPORT",
+        error_description: "Leitura do mês já realizada",
+      });
+      return;
+    }
     try {
       reply.code(200).send({
         image_url: "url_image",
