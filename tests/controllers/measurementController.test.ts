@@ -3,6 +3,7 @@ import sinon from "sinon";
 import { expect } from "chai";
 import type { MeasurementService } from "../../src/services/measurementService.ts";
 import { MeasurementController } from "../../src/controllers/measurementController.ts";
+import { any } from "zod";
 
 describe("MeasurementController suite tests", () => {
   describe("handleMeasurement", () => {
@@ -88,6 +89,44 @@ describe("MeasurementController suite tests", () => {
 
       const responsePayload = reply.send.firstCall.args[0];
       expect(responsePayload).to.be.deep.equal(expectedPaylod);
+    });
+
+    it("should return status code 409 and a valid json if there is a reading in current month", async () => {
+      const mockService: MeasurementService = {
+        getMeasurement: sinon.stub().resolves({
+          error_code: "DOUBLE_REPORT",
+          error_description: "Leitura do mês já realizada",
+        }),
+      };
+
+      const measurementController: MeasurementController =
+        new MeasurementController(mockService);
+      const mockRequest = {
+        body: {
+          image: "base64string",
+          customer_code: "ABC123",
+          measure_datetime: "2024-01-01T12:00:00Z",
+          measure_type: "WATER",
+        },
+      };
+      const reply = {
+        code: sinon.stub().returnsThis(),
+        send: sinon.stub(),
+      };
+      await measurementController.handleMeasurement(
+        mockRequest as any,
+        reply as any
+      );
+
+      const statusCode = reply.code.firstCall.args[0];
+      expect(statusCode).to.be.equal(409);
+
+      const expectedPaylod = {
+        error_code: "DOUBLE_REPORT",
+        error_description: "Leitura do mês já realizada",
+      };
+      const payload = reply.send.firstCall.args[0];
+      expect(payload).to.deep.equal(expectedPaylod);
     });
   });
 });
