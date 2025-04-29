@@ -7,7 +7,7 @@
       //  "moduleResolution": "node10",
        "outDir": "dist",
        "rewriteRelativeImportExtensions": true,
-       "erasableSyntaxOnly": true,
+       "erasableSyntaxOnly": false,
        "verbatimModuleSyntax": true
     }, "exclude": ["node_modules"]
   }
