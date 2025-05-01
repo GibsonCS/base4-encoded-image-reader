@@ -3,7 +3,6 @@ import sinon from "sinon";
 import { expect } from "chai";
 import type { MeasurementService } from "../../src/services/measurementService.ts";
 import { MeasurementController } from "../../src/controllers/measurementController.ts";
-import { any } from "zod";
 
 describe("MeasurementController suite tests", () => {
   describe("handleMeasurement", () => {
