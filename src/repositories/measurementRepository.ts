@@ -24,9 +24,24 @@ export class MeasurementRepository implements BaseRepostiory<Measurement> {
         return measurement
     }
 
-    findById(id: string): { image?: string; customer_code?: string; measure_datetime?: string; measure_type?: string; } {
-        throw new Error("Method not implemented.");
+    findById(id: string): Measurement {
+        // const statement = this.database.prepare(`
+        //         SELECT * from measurement where customer_code = ?
+        //     `)
+
+        return
+
     }
+
+    findByCustomerCode(customerId: string): Measurement {
+        const statement = this.database.prepare(`
+                SELECT * FROM measurement WHERE customer_code = ?
+            `)
+
+        const measurements = statement.get(customerId)
+        return measurements
+    }
+
     findAll(): { image?: string; customer_code?: string; measure_datetime?: string; measure_type?: string; }[] {
         throw new Error("Method not implemented.");
     }
