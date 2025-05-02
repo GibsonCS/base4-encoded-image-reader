@@ -14,7 +14,7 @@ export class MeasurementController {
       error_description: "Os dados fornecidos no corpo da requisição são inválidos",
     }
 
-    if (result.error.issues[0].path[0] === "measure_type") return reply.code(400).send({ message: "Você precisa escolher somente entre WATER ou GAS" })
+    if (result.error?.issues[0].path[0] === "measure_type") return reply.code(400).send({ message: "Você precisa escolher somente entre WATER ou GAS" })
     if (!result.success) return reply.code(400).send(INVALID_DATA);
 
     const response: any = await this.service.getMeasurement(result.data);
