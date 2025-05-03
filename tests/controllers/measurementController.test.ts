@@ -1,13 +1,17 @@
-import { describe, it } from "node:test";
+import { before, describe, it } from "node:test";
 import sinon from "sinon";
 import { expect } from "chai";
-import type { MeasurementService } from "../../src/services/measurementService.ts";
 import { MeasurementController } from "../../src/controllers/measurementController.ts";
+import { runSeed } from "../../src/shared/database/db.ts";
+
+before(() => {
+  runSeed()
+})
 
 describe("MeasurementController suite tests", () => {
   describe("handleMeasurement", () => {
     it("should call service and response with status 200 and a valid json", async () => {
-      const mockService: MeasurementService = {
+      const mockService: any = {
         getMeasurement: sinon.stub().resolves({
           image_url: "http://example.com/image.jpg",
           measure_value: 42.7,
@@ -48,7 +52,7 @@ describe("MeasurementController suite tests", () => {
     });
 
     it("should return a status code 400 and a valid json with erro information", async () => {
-      const mockService: MeasurementService = {
+      const mockService: any = {
         getMeasurement: sinon.stub().resolves({
           image_url: "http://example.com/image.jpg",
           measure_value: 42.7,
@@ -91,7 +95,7 @@ describe("MeasurementController suite tests", () => {
     });
 
     it("should return status code 409 and a valid json if there is a reading in current month", async () => {
-      const mockService: MeasurementService = {
+      const mockService: any = {
         getMeasurement: sinon.stub().resolves({
           error_code: "DOUBLE_REPORT",
           error_description: "Leitura do mês já realizada",
