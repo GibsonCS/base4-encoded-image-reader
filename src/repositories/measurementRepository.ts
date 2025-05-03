@@ -33,12 +33,12 @@ export class MeasurementRepository implements BaseRepostiory<Measurement> {
 
     }
 
-    findByCustomerCode(customerId: string): Measurement {
+    findByCustomerCode(customerId: string): Measurement[] {
         const statement = this.database.prepare(`
                 SELECT * FROM measurement WHERE customer_code = ?
             `)
 
-        const measurements = statement.get(customerId)
+        const measurements = statement.all(customerId)
         return measurements
     }
 
