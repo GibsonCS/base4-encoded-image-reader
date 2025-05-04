@@ -12,4 +12,11 @@ export const measurementSchema = z.object({
       message: "Você precisa escolher somente entre WATER ou GAS",
     }),
 });
+
+export const confirMeasurementSchema = z.object({
+  measure_uuid: z.string().uuid(),
+  confirmed_value: z.number().int(),
+});
+
 export type Measurement = z.infer<typeof measurementSchema>;
+export type ConfirmMeasurement = z.infer<typeof confirMeasurementSchema>;
