@@ -1,5 +1,8 @@
 import type { CustomerRepository } from "../repositories/customerRepository.ts";
-import type { Measurement } from "../schemas/measurementSchema.js";
+import type {
+  ConfirmMeasurement,
+  Measurement,
+} from "../schemas/measurementSchema.js";
 import type { MeasurementRepository } from "../repositories/measurementRepository.js";
 import crypto from "node:crypto";
 import { writeFile } from "node:fs/promises";
@@ -120,19 +123,23 @@ export class MeasurementService {
     };
   };
 
-  confirmMeasurement = async (dataMeasurement) => {
+  confirmMeasurement = async (dataMeasurement: ConfirmMeasurement) => {
     const { measure_uuid, confirmed_value } = dataMeasurement;
 
-    if (measure_uuid === "54531-451351-543115-54351-35135")
-      return {
-        error_code: "MEASURE_NOT_FOUND",
-        error_description: "Leitura do mês já realizada",
-      };
-    if (confirmed_value === 500)
+    const measurement = await this.measurementRepository.findById(measure_uuid);
+    if (measurement?.has_confirmed === 1)
       return {
         error_code: "CONFIRMATION_DUPLICATE",
         error_description: "Leitura do mês já realizada",
       };
+
+    if (!measurement)
+      return {
+        error_code: "MEASURE_NOT_FOUND",
+        error_description: "Leitura do mês já realizada",
+      };
+
+    this.measurementRepository.update({ measure_uuid, confirmed_value });
 
     return {
       success: true,
