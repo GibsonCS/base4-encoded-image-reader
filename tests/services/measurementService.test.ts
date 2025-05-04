@@ -38,4 +38,49 @@ describe("MeasurementService", () => {
       })
     });
   })
+
+  describe('confirmMeasurement', () => {
+    it('should return a json with attibute sucesse and value true', async () => {
+      const mockInput = {
+        measure_uuid: "5454-35453-35415-351-3541",
+        confirmed_value: 501
+        }
+        const expected = {
+          success: true
+        }
+        
+        const result = await measurementService.confirmMeasurement(mockInput)
+        expect(result).to.be.deep.equal(expected)
+      })
+      
+    it('should return a error json if the measurement has not found', async () => {
+      const mockInput = {
+        measure_uuid: "54531-451351-543115-54351-35135",
+        confirmed_value: 500
+        }
+      const expected = {
+        error_code: "MEASURE_NOT_FOUND",
+        error_description: "Leitura do mês já realizada"
+        }
+      
+      const result = await measurementService.confirmMeasurement(mockInput)
+      expect(result).to.be.deep.equal(expected)
+    })
+
+    it('should return a json error stating that the measurement was confirmed', async () => {
+      const mockInput = {
+        measure_uuid: "5454-35453-35415-351-3541",
+        confirmed_value: 500
+      }
+      
+      const expected = {
+        error_code: "CONFIRMATION_DUPLICATE",
+        error_description: "Leitura do mês já realizada"
+      }
+
+      const result = await measurementService.confirmMeasurement(mockInput)
+
+      expect(result).to.be.deep.equal(expected)
+    })
+  })
 });
