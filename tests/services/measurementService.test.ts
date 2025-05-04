@@ -1,4 +1,4 @@
-import { before, describe, it } from "node:test";
+import { before, describe, it, afterEach } from "node:test";
 import { expect } from "chai";
 import getMeasurementMocks from './mocks/getMeasurement-mocks.json' with {type: "json"}
 import { MeasurementService } from "../../src/services/measurementService.ts";
@@ -17,6 +17,10 @@ describe("MeasurementService", () => {
     measurementRepository = new MeasurementRepository(database)
     customerRepository = new CustomerRepository(database)
     measurementService = new MeasurementService(customerRepository, measurementRepository)
+  })
+
+  afterEach(() => {
+    sinon.restore()
   })
 
   describe('getMeasurement()', () => {
@@ -41,6 +45,14 @@ describe("MeasurementService", () => {
 
   describe('confirmMeasurement', () => {
     it('should return a json with attibute sucesse and value true', async () => {
+      sinon.stub(measurementRepository, "findById").withArgs("5454-35453-35415-351-3541").resolves({
+        measure_uuid: 'c36ba395-eaae-437e-bdf9-491d71dae42d',
+        measure_datetime: '2025-04-29T09:54:50Z',
+        measure_value: 5,
+        measure_type: 'GAS',
+        has_confirmed: 0,
+        customer_code: 'string'
+      })
       const mockInput = {
         measure_uuid: "5454-35453-35415-351-3541",
         confirmed_value: 501
@@ -68,8 +80,17 @@ describe("MeasurementService", () => {
     })
 
     it('should return a json error stating that the measurement was confirmed', async () => {
+      sinon.stub(measurementRepository, 'findById').withArgs("c36ba395-eaae-437e-bdf9-491d71dae42d").resolves({
+        measure_uuid: 'c36ba395-eaae-437e-bdf9-491d71dae42d',
+        measure_datetime: '2025-04-29T09:54:50Z',
+        measure_value: 5,
+        measure_type: 'GAS',
+        has_confirmed: 1,
+        customer_code: 'string'
+      })
+
       const mockInput = {
-        measure_uuid: "5454-35453-35415-351-3541",
+        measure_uuid: "c36ba395-eaae-437e-bdf9-491d71dae42d",
         confirmed_value: 500
       }
       
@@ -79,7 +100,6 @@ describe("MeasurementService", () => {
       }
 
       const result = await measurementService.confirmMeasurement(mockInput)
-
       expect(result).to.be.deep.equal(expected)
     })
   })
