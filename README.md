@@ -36,12 +36,6 @@ This will create a temporary container based on the test service defined in your
 View test coverage report
 To view the test coverage report, run the following:
 
-bash
-Copiar
-Editar
-docker-compose run --rm test
-After running this command, a detailed code coverage report will be shown in the terminal. An HTML version of the report will also be available inside the /coverage folder for visual inspection.
-
 ---
 
 ## API Overview
