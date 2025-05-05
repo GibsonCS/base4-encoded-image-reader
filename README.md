@@ -13,36 +13,30 @@ This project is a backend system built with Fastify and Node.js 22, integrated w
 
 ### Installation
 
-obs: use `` npm ci `` to restaure all dependecy listed in package-lock.json
-```bash
+``` bash
 git clone https://github.com/GibsonCS/gibson_shopper.git
 cd gibson_shopper
-npm ci
+docker-compose up --build measurement-api
 ```
+This will build the image (if necessary) and start the application inside a container. By default, the server will be available on port 80.
 
-### Running the server
+## 🧪 Testing with Docker
+Run unit tests
+To run unit tests inside the Docker container:
 
-```bash
-npm run dev
+``` bash 
+docker-compose run --rm test
 ```
+This will create a temporary container based on the test service defined in your docker-compose.yml, run the tests, and remove the container afterward.
 
----
+View test coverage report
+To view the test coverage report, run the following:
 
-## 🧪 Testing
-
-### Run unit tests
-
-```bash
-npm test
-```
-
-### View test coverage report
-
-```bash
-npm run test:cov
-```
-
-After running this command, a detailed code coverage report will be shown in the terminal, and an HTML version will be available inside the `/coverage` folder for visual inspection.
+bash
+Copiar
+Editar
+docker-compose run --rm test
+After running this command, a detailed code coverage report will be shown in the terminal. An HTML version of the report will also be available inside the /coverage folder for visual inspection.
 
 ---
 
