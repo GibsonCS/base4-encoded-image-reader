@@ -19,7 +19,7 @@ git clone https://github.com/GibsonCS/gibson_shopper.git
 cd gibson_shopper
 docker-compose up --build measurement-api
 ```
-
+obs: you need a .env file. Vide .env.example
 This will build the image (if necessary) and start the application inside a container. By default, the server will be available on port 80.
 
 ## 🧪 Testing with Docker
