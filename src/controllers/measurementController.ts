@@ -1,12 +1,8 @@
-import type { FastifyReply, FastifyRequest } from "fastify";
-import type { MeasurementService } from "../services/measurementService.js";
-import {
-  confirMeasurementSchema,
-  measurementSchema,
-  measurementTypeSchema,
-} from "../schemas/measurementSchema.ts";
-import { readFile } from "node:fs/promises";
-import * as z from "zod";
+import type { FastifyReply, FastifyRequest } from 'fastify';
+import type { MeasurementService } from '../services/measurementService.js';
+import { confirMeasurementSchema, measurementSchema, measurementTypeSchema } from '../schemas/measurementSchema.ts';
+import { readFile } from 'node:fs/promises';
+import * as z from 'zod';
 
 export class MeasurementController {
   constructor(private service: MeasurementService) {}
@@ -15,26 +11,22 @@ export class MeasurementController {
     const result = measurementSchema.safeParse(request.body);
 
     const INVALID_DATA = {
-      error_code: "INVALID_DATA",
-      error_description:
-        "Os dados fornecidos no corpo da requisição são inválidos",
+      error_code: 'INVALID_DATA',
+      error_description: 'Os dados fornecidos no corpo da requisição são inválidos',
     };
 
-    if (result.error?.issues[0].path[0] === "measure_type")
-      return reply
-        .code(400)
-        .send({ message: "Você precisa escolher somente entre WATER ou GAS" });
+    if (result.error?.issues[0].path[0] === 'measure_type')
+      return reply.code(400).send({ message: 'Você precisa escolher somente entre WATER ou GAS' });
     if (!result.success) return reply.code(400).send(INVALID_DATA);
 
     const response: any = await this.service.getMeasurement(result.data);
 
     const ERRO_DOUBLE_REPORT = {
-      error_code: "DOUBLE_REPORT",
-      error_description: "Leitura do mês já realizada",
+      error_code: 'DOUBLE_REPORT',
+      error_description: 'Leitura do mês já realizada',
     };
 
-    if (response.error_code === "DOUBLE_REPORT")
-      return reply.code(409).send(ERRO_DOUBLE_REPORT);
+    if (response.error_code === 'DOUBLE_REPORT') return reply.code(409).send(ERRO_DOUBLE_REPORT);
 
     reply.code(200).send(response);
   };
@@ -42,44 +34,37 @@ export class MeasurementController {
   handleTempImage = async (request: FastifyRequest, reply: FastifyReply) => {
     const { id } = request.params as { id: string };
 
-    const imagesLog = JSON.parse(
-      await readFile(`${process.cwd()}/src/images/imageLog.json`, "utf8")
-    );
+    const imagesLog = JSON.parse(await readFile(`${process.cwd()}/src/images/imageLog.json`, 'utf8'));
     const [log] = imagesLog.filter((i: any) => i.imageId === id);
 
-    if (Date.now() > log.expiresAt)
-      return reply.code(500).send({ message: "Link Expirado" });
+    if (Date.now() > log.expiresAt) return reply.code(500).send({ message: 'Link Expirado' });
 
     reply
-      .header("Content-type", "image/jpeg")
+      .header('Content-type', 'image/jpeg')
       .code(200)
       .send(await readFile(`${process.cwd()}/src/images/${id}.jpeg`));
   };
 
-  handleConfirmMeasurement = async (
-    request: FastifyRequest,
-    reply: FastifyReply
-  ) => {
+  handleConfirmMeasurement = async (request: FastifyRequest, reply: FastifyReply) => {
     const result = confirMeasurementSchema.safeParse(request.body);
 
     if (!result.success)
       return reply.code(400).send({
-        error_code: "INVALID_DATA",
-        error_description:
-          "Os dados fornecidos no corpo da requisição são inválidos",
+        error_code: 'INVALID_DATA',
+        error_description: 'Os dados fornecidos no corpo da requisição são inválidos',
       });
 
     const measurementInfo = await this.service.confirmMeasurement(result.data);
-    if (measurementInfo.error_code === "MEASURE_NOT_FOUND")
+    if (measurementInfo.error_code === 'MEASURE_NOT_FOUND')
       return reply.code(404).send({
-        error_code: "MEASURE_NOT_FOUND",
-        error_description: "Leitura do mês já realizada",
+        error_code: 'MEASURE_NOT_FOUND',
+        error_description: 'Leitura do mês já realizada',
       });
 
-    if (measurementInfo.error_code === "CONFIRMATION_DUPLICATE")
+    if (measurementInfo.error_code === 'CONFIRMATION_DUPLICATE')
       return reply.code(409).send({
-        error_code: "CONFIRMATION_DUPLICATE",
-        error_description: "Leitura do mês já realizada",
+        error_code: 'CONFIRMATION_DUPLICATE',
+        error_description: 'Leitura do mês já realizada',
       });
 
     return reply.code(200).send({
@@ -87,23 +72,17 @@ export class MeasurementController {
     });
   };
 
-  handleGetAllMeasurementByCustomerCode = async (
-    request: FastifyRequest,
-    reply: FastifyReply
-  ) => {
+  handleGetAllMeasurementByCustomerCode = async (request: FastifyRequest, reply: FastifyReply) => {
     try {
       const { customerCode } = request.params as { customerCode: string };
       const { measure_type } = request.query as { measure_type: string };
       measurementTypeSchema.parse(measure_type);
-      const result: any = await this.service.getAllMeasurementByCustomerCode(
-        customerCode,
-        measure_type
-      );
+      const result: any = await this.service.getAllMeasurementByCustomerCode(customerCode, measure_type);
 
-      if (result === "MEASURES_NOT_FOUND") {
+      if (result === 'MEASURES_NOT_FOUND') {
         return reply.code(404).send({
-          error_code: "MEASURES_NOT_FOUND",
-          error_description: "Nenhuma leitura encontrada",
+          error_code: 'MEASURES_NOT_FOUND',
+          error_description: 'Nenhuma leitura encontrada',
         });
       }
       return reply.code(200).send(result);
@@ -111,7 +90,7 @@ export class MeasurementController {
       if (error instanceof z.ZodError)
         return reply.code(400).send({
           error_code: error?.issues[0]?.path[0],
-          error_description: "Tipo de medição não permitida",
+          error_description: 'Tipo de medição não permitida',
         });
       throw new Error(error);
     }

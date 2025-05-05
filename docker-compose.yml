@@ -2,7 +2,7 @@ services:
   measurement-api:
     build: .
     ports:
-      - "80:3000"
+      - '80:3000'
     volumes:
       - .:/app
       - /app/node_modules
@@ -12,11 +12,11 @@ services:
 
   test:
     build: .
-    command: npm run test:cov  
+    command: npm run test:cov
     volumes:
       - .:/app
       - /app/node_modules
     environment:
-      - NODE_ENV=test  
+      - NODE_ENV=test
     depends_on:
       - measurement-api

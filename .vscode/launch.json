@@ -1,18 +1,13 @@
 {
-    "configurations": [
+  "configurations": [
     {
-        "name": "Launch via NPM",
-        "request": "launch",
-        "runtimeExecutable": "npm",
-        "runtimeArgs": [
-            "run",
-            "debug"
-        ],
-        "skipFiles": [
-            "<node_internals>/**"
-        ],
-        "type": "node",
-        "console": "integratedTerminal"
+      "name": "Launch via NPM",
+      "request": "launch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "debug"],
+      "skipFiles": ["<node_internals>/**"],
+      "type": "node",
+      "console": "integratedTerminal"
     }
-    ]
+  ]
 }

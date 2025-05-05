@@ -1,9 +1,6 @@
-import type { DatabaseSync } from "node:sqlite";
-import type {
-  ConfirmMeasurement,
-  Measurement,
-} from "../schemas/measurementSchema.ts";
-import type { BaseRepostiory } from "./baseRepository.ts";
+import type { DatabaseSync } from 'node:sqlite';
+import type { ConfirmMeasurement, Measurement } from '../schemas/measurementSchema.ts';
+import type { BaseRepostiory } from './baseRepository.ts';
 
 interface MeasurementEntity {
   measure_uuid?: string;
@@ -14,9 +11,7 @@ interface MeasurementEntity {
   customer_code?: string;
 }
 
-export class MeasurementRepository
-  implements BaseRepostiory<Measurement | ConfirmMeasurement>
-{
+export class MeasurementRepository implements BaseRepostiory<Measurement | ConfirmMeasurement> {
   constructor(private database: DatabaseSync) {}
 
   save(measurement: MeasurementEntity): MeasurementEntity {
@@ -46,21 +41,14 @@ export class MeasurementRepository
     return measurements;
   }
 
-  async findByCustomerCodeAndMeasureType(
-    customerCode: string,
-    measureType?: string
-  ): Promise<Measurement[]> {
+  async findByCustomerCodeAndMeasureType(customerCode: string, measureType?: string): Promise<Measurement[]> {
     const statement = this.database.prepare(`
       SELECT * FROM measurement 
       WHERE customer_code = ? 
         AND (? IS NULL OR measure_type = ?)
     `);
 
-    const measurements = statement.all(
-      customerCode,
-      measureType ?? null,
-      measureType ?? null
-    );
+    const measurements = statement.all(customerCode, measureType ?? null, measureType ?? null);
     return measurements;
   }
 
@@ -70,7 +58,7 @@ export class MeasurementRepository
     measure_datetime?: string;
     measure_type?: string;
   }[] {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
   update(obj: ConfirmMeasurement): MeasurementEntity {
     const statement = this.database.prepare(`

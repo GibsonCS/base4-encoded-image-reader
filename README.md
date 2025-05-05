@@ -14,20 +14,23 @@ This project is a backend system built with Fastify and Node.js 22, integrated w
 
 ### Installation
 
-``` bash
+```bash
 git clone https://github.com/GibsonCS/gibson_shopper.git
 cd gibson_shopper
 docker-compose up --build measurement-api
 ```
+
 This will build the image (if necessary) and start the application inside a container. By default, the server will be available on port 80.
 
 ## 🧪 Testing with Docker
+
 Run unit tests
 To run unit tests inside the Docker container:
 
-``` bash 
+```bash
 docker-compose run --rm test
 ```
+
 This will create a temporary container based on the test service defined in your docker-compose.yml, run the tests, and remove the container afterward.
 
 View test coverage report
@@ -48,6 +51,7 @@ After running this command, a detailed code coverage report will be shown in the
 Processes an image and returns the extracted measurement.
 
 #### Request Body
+
 ```json
 {
   "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
@@ -58,6 +62,7 @@ Processes an image and returns the extracted measurement.
 ```
 
 #### Response Body
+
 ```json
 {
   "image_url": "https://yourdomain.com/temp-images/CUST123_20250505.jpg",
@@ -75,6 +80,7 @@ Processes an image and returns the extracted measurement.
 Corrects a previously recorded measurement value.
 
 #### Request Body
+
 ```json
 {
   "measure_uuid": "1a2b3c4d-5678-90ef-ghij-klmnopqrstuv",
@@ -83,6 +89,7 @@ Corrects a previously recorded measurement value.
 ```
 
 #### Response Body
+
 ```json
 {
   "success": "true."
@@ -91,11 +98,11 @@ Corrects a previously recorded measurement value.
 
 ---
 
-## 👹 DEMO 
+## 👹 DEMO
+
 https://github.com/user-attachments/assets/356accf5-c9e5-4690-b62f-c1c708f1c342
 
-***
-
+---
 
 ## 🖥️ Technologies Used
 

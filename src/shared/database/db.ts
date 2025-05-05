@@ -1,6 +1,6 @@
-import { DatabaseSync } from "node:sqlite";
+import { DatabaseSync } from 'node:sqlite';
 
-export const database = new DatabaseSync("./src/shared/database/db.sqlite");
+export const database = new DatabaseSync('./src/shared/database/db.sqlite');
 export const runSeed = () => {
   database.exec(`
     DROP TABLE IF EXISTS measurement;

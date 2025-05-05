@@ -1,13 +1,14 @@
 {
-    "compilerOptions": {
-       "noEmit": true, // Optional - see note below
-       "target": "esnext",
-       "module": "nodenext",
-       "resolveJsonModule": true,
-      //  "moduleResolution": "node10",
-       "outDir": "dist",
-       "rewriteRelativeImportExtensions": true,
-       "erasableSyntaxOnly": false,
-       "verbatimModuleSyntax": true
-    }, "exclude": ["node_modules"]
-  }
+  "compilerOptions": {
+    "noEmit": true, // Optional - see note below
+    "target": "esnext",
+    "module": "nodenext",
+    "resolveJsonModule": true,
+    //  "moduleResolution": "node10",
+    "outDir": "dist",
+    "rewriteRelativeImportExtensions": true,
+    "erasableSyntaxOnly": false,
+    "verbatimModuleSyntax": true
+  },
+  "exclude": ["node_modules"]
+}

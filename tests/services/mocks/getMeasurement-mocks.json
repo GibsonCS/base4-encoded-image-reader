@@ -1,18 +1,18 @@
 {
-    "inputValidMock": {
-        "image": "base64",
-        "customer_code": "string",
-        "measure_datetime": "2025-04-27T04:20:27.951Z",
-        "measure_type": "WATER"
-    },
-    "outputValidMock": {
-        "image_url": "url_image",
-        "measure_uuid": "uuid123456",
-        "measure_value": 200
-    },
-    "inputDateInvalidMock": {
-        "customer_code": "strings",
-        "measure_datetime": "2025-05-27T04:20:27.951Z",
-        "measure_type": "WATER"
-    }
+  "inputValidMock": {
+    "image": "base64",
+    "customer_code": "string",
+    "measure_datetime": "2025-04-27T04:20:27.951Z",
+    "measure_type": "WATER"
+  },
+  "outputValidMock": {
+    "image_url": "url_image",
+    "measure_uuid": "uuid123456",
+    "measure_value": 200
+  },
+  "inputDateInvalidMock": {
+    "customer_code": "strings",
+    "measure_datetime": "2025-05-27T04:20:27.951Z",
+    "measure_type": "WATER"
+  }
 }
