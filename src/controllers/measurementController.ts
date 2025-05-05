@@ -6,6 +6,7 @@ import {
   measurementTypeSchema,
 } from "../schemas/measurementSchema.ts";
 import { readFile } from "node:fs/promises";
+import * as z from "zod";
 
 export class MeasurementController {
   constructor(private service: MeasurementService) {}
@@ -99,15 +100,15 @@ export class MeasurementController {
         measure_type
       );
 
-      if (!result.measurements.length)
+      if (result === "MEASURES_NOT_FOUND") {
         return reply.code(404).send({
           error_code: "MEASURES_NOT_FOUND",
           error_description: "Nenhuma leitura encontrada",
         });
-
-      reply.code(200).send(result);
+      }
+      return reply.code(200).send(result);
     } catch (error) {
-      if (error?.issues[0]?.path[0] === "INVALID_TYPE")
+      if (error instanceof z.ZodError)
         return reply.code(400).send({
           error_code: error?.issues[0]?.path[0],
           error_description: "Tipo de medição não permitida",
