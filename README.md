@@ -71,6 +71,8 @@ Processes an image and returns the extracted measurement.
 }
 ```
 
+**obs: URL expires in 1 minute**
+
 ---
 
 ### **PATCH `/confirm`**
@@ -93,6 +95,12 @@ Corrects a previously recorded measurement value.
 ```
 
 ---
+
+## 👹 DEMO 
+https://github.com/user-attachments/assets/356accf5-c9e5-4690-b62f-c1c708f1c342
+
+***
+
 
 ## 🖥️ Technologies Used
 
