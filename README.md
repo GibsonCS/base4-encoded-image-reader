@@ -20,7 +20,7 @@ cd gibson_shopper
 docker-compose up --build measurement-api
 ```
 obs: you need a .env file. Vide .env.example
-This will build the image (if necessary) and start the application inside a container. By default, the server will be available on port 80.
+This will build the image (if necessary) and start the application inside a container. By default, the server will be available on port 80 (container: 3000).
 
 ## 🧪 Testing with Docker
 
@@ -59,7 +59,7 @@ Processes an image and returns the extracted measurement.
 
 ```json
 {
-  "image_url": "https://yourdomain.com/temp-images/CUST123_20250505.jpg",
+  "image_url": "http://localhost/temp-images/CUST123_20250505.jpg",
   "measure_value": 157,
   "measure_uuid": "1a2b3c4d-5678-90ef-ghij-klmnopqrstuv"
 }
