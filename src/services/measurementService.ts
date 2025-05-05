@@ -35,7 +35,7 @@ export class MeasurementService {
         measure_uuid: crypto.randomUUID(),
         measure_datetime,
         measure_value: parseInt(valueOfMeasure),
-        measure_type,
+        measure_type: measure_type.toUpperCase(),
         has_confirmed: 0,
         customer_code,
       };
@@ -93,7 +93,7 @@ export class MeasurementService {
       measure_uuid: crypto.randomUUID(),
       measure_datetime,
       measure_value: parseInt(valueOfMeasure),
-      measure_type,
+      measure_type: measure_type.toUpperCase(),
       has_confirmed: 0,
       customer_code: measureData.customer_code,
     };
@@ -148,26 +148,23 @@ export class MeasurementService {
 
   getAllMeasurementByCustomerCode = async (
     customerCode: string,
-    measureType: string
+    measureType?: string
   ) => {
-    return {
-      customer_code: "632b0f38-291a-479b-ae94-aee4d7c94aB7",
-      measures: [
-        {
-          measure_uuid: "632b0f38-291a-479b-ae94-aee4d7c94aa9",
-          measure_datetime: "",
-          measure_type: "GAS",
-          has_confirmed: 0,
-          image_url: "",
-        },
-        {
-          measure_uuid: "632b0f38-291a-479b-ae94-aee4d7c94aa8",
-          measure_datetime: "",
-          measure_type: "GAS",
-          has_confirmed: 1,
-          image_url: "",
-        },
-      ],
+    const result =
+      await this.measurementRepository.findByCustomerCodeAndMeasureType(
+        customerCode,
+        measureType?.toUpperCase()
+      );
+
+    const measurements = result.map(({ customer_code, ...rest }) => rest);
+
+    const customerMeasurements = {
+      customer_code: customerCode,
+      measurements,
     };
+
+    if (!measurements.length) return "MEASURES_NOT_FOUND";
+
+    return customerMeasurements;
   };
 }
