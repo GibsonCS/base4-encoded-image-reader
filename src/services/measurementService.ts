@@ -145,4 +145,29 @@ export class MeasurementService {
       success: true,
     };
   };
+
+  getAllMeasurementByCustomerCode = async (
+    customerCode: string,
+    measureType: string
+  ) => {
+    return {
+      customer_code: "632b0f38-291a-479b-ae94-aee4d7c94aB7",
+      measures: [
+        {
+          measure_uuid: "632b0f38-291a-479b-ae94-aee4d7c94aa9",
+          measure_datetime: "",
+          measure_type: "GAS",
+          has_confirmed: 0,
+          image_url: "",
+        },
+        {
+          measure_uuid: "632b0f38-291a-479b-ae94-aee4d7c94aa8",
+          measure_datetime: "",
+          measure_type: "GAS",
+          has_confirmed: 1,
+          image_url: "",
+        },
+      ],
+    };
+  };
 }
