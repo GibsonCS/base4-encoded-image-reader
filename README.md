@@ -10,6 +10,7 @@ This project is a backend system built with Fastify and Node.js 22, integrated w
 
 - Node.js v22+
 - npm (or pnpm/yarn)
+- docker
 
 ### Installation
 
