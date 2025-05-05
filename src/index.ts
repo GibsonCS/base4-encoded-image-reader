@@ -6,7 +6,7 @@ export const server = fastify({ logger: false });
 routesRegistration(server);
 
 const startServer = async () => {
-  await server.listen({ port: 3000 });
+  await server.listen({ port: 3000, host: "0.0.0.0" });
   console.log("Server listening at 3000");
 };
 runSeed();
