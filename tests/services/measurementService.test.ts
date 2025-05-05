@@ -6,6 +6,7 @@ import { CustomerRepository } from "../../src/repositories/customerRepository.js
 import { MeasurementRepository } from "../../src/repositories/measurementRepository.js";
 import { database, runSeed } from '../../src/shared/database/db.js'
 import sinon from 'sinon'
+import { array } from "zod";
 
 describe("MeasurementService", () => {
   let customerRepository: CustomerRepository
@@ -101,6 +102,17 @@ describe("MeasurementService", () => {
 
       const result = await measurementService.confirmMeasurement(mockInput)
       expect(result).to.be.deep.equal(expected)
+    })
+
+    it('should return a array list from all measurement', async () => {
+        const customerCode = "632b0f38-291a-479b-ae94-aee4d7c94aa8"
+        const measureType = "GAS"
+    
+      const result = await measurementService.getAllMeasurementByCustomerCode(customerCode,measureType)
+      expect(result).to.containSubset({
+        customer_code: (val: string) => typeof val === "string",
+        measures: (val: string) => typeof val === "object"
+      })
     })
   })
 });
