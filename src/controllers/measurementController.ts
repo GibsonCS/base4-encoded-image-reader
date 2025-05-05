@@ -3,6 +3,7 @@ import type { MeasurementService } from "../services/measurementService.js";
 import {
   confirMeasurementSchema,
   measurementSchema,
+  measurementTypeSchema,
 } from "../schemas/measurementSchema.ts";
 import { readFile } from "node:fs/promises";
 
@@ -83,5 +84,35 @@ export class MeasurementController {
     return reply.code(200).send({
       success: true,
     });
+  };
+
+  handleGetAllMeasurementByCustomerCode = async (
+    request: FastifyRequest,
+    reply: FastifyReply
+  ) => {
+    try {
+      const { customerCode } = request.params as { customerCode: string };
+      const { measure_type } = request.query as { measure_type: string };
+      measurementTypeSchema.parse(measure_type);
+      const result: any = await this.service.getAllMeasurementByCustomerCode(
+        customerCode,
+        measure_type
+      );
+
+      if (!result.measurements.length)
+        return reply.code(404).send({
+          error_code: "MEASURES_NOT_FOUND",
+          error_description: "Nenhuma leitura encontrada",
+        });
+
+      reply.code(200).send(result);
+    } catch (error) {
+      if (error?.issues[0]?.path[0] === "INVALID_TYPE")
+        return reply.code(400).send({
+          error_code: error?.issues[0]?.path[0],
+          error_description: "Tipo de medição não permitida",
+        });
+      throw new Error(error);
+    }
   };
 }
