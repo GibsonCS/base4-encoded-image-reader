@@ -18,5 +18,21 @@ export const confirMeasurementSchema = z.object({
   confirmed_value: z.number().int(),
 });
 
+export const measurementCustomerCodeUUID = z.string().uuid();
+
+export const measurementTypeSchema = z
+  .string()
+  .refine(
+    (type) =>
+      type?.toLowerCase() === "water" ||
+      type?.toLowerCase() === "gas" ||
+      type === "",
+    {
+      message: "Tipo de medição não permitida",
+      path: ["INVALID_TYPE"],
+    }
+  )
+  .optional();
+
 export type Measurement = z.infer<typeof measurementSchema>;
 export type ConfirmMeasurement = z.infer<typeof confirMeasurementSchema>;
