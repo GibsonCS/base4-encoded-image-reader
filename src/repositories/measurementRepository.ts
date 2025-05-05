@@ -46,6 +46,24 @@ export class MeasurementRepository
     return measurements;
   }
 
+  async findByCustomerCodeAndMeasureType(
+    customerCode: string,
+    measureType?: string
+  ): Promise<Measurement[]> {
+    const statement = this.database.prepare(`
+      SELECT * FROM measurement 
+      WHERE customer_code = ? 
+        AND (? IS NULL OR measure_type = ?)
+    `);
+
+    const measurements = statement.all(
+      customerCode,
+      measureType ?? null,
+      measureType ?? null
+    );
+    return measurements;
+  }
+
   findAll(): {
     image?: string;
     customer_code?: string;
