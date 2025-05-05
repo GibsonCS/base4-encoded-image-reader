@@ -17,4 +17,8 @@ export const measurementRoutes = async (server: FastifyInstance) => {
   server.post("/upload", measurementController.handleMeasurement);
   server.get(`/images/:id${".jpeg"}`, measurementController.handleTempImage);
   server.patch("/confirm", measurementController.handleConfirmMeasurement);
+  server.get(
+    "/:customerCode/list",
+    measurementController.handleGetAllMeasurementByCustomerCode
+  );
 };
