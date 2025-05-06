@@ -48,7 +48,7 @@ Processes an image and returns the extracted measurement.
 
 ```json
 {
-  "image": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD...",
+  "image": "4AAQSkZJRgABAQAAAQABAAD...",
   "customer_code": "CUST123",
   "measure_datetime": "2025-05-05T14:30:00Z",
   "measure_type": "WATER"
