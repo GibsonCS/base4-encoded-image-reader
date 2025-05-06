@@ -40,7 +40,7 @@ To view the test coverage report, run the following:
 
 ## API Overview
 
-### **POST `/measurements`**
+### **POST `/upload`**
 
 Processes an image and returns the extracted measurement.
 
