@@ -15,8 +15,8 @@ This project is a backend system built with Fastify and Node.js 22, integrated w
 ### Installation
 
 ```bash
-git clone https://github.com/GibsonCS/gibson_shopper.git
-cd gibson_shopper
+git clone https://github.com/GibsonCS/base4-encoded-image-reader.git
+cd base4-encoded-image-reader
 docker-compose up --build measurement-api
 ```
 obs: you need a .env file. Vide .env.example
